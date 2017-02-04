@@ -88,4 +88,4 @@ def reshape_image(img):
     # Resize all other three images
     img_Resized = resample.Execute(img)
 
-    return img
+    return img_Resized
