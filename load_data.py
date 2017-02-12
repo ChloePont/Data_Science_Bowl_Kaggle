@@ -107,4 +107,4 @@ def get_lungs_arr(patient_id, path=''):
     resampled_arr = resample(img)
     segmented_lungs = segment_lungs(resampled_arr)
     return segmented_lungs
->>>>>>> 2a2789c1e0231902db3778e2a8f1de7e91e3f4cc
+
