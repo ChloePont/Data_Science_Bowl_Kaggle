@@ -6,7 +6,7 @@ import os
 import SimpleITK
 from sklearn.cluster import KMeans
 from skimage import morphology, measure
-
+import scipy
 
 # Define function to import scans for one patient
 def import_img_series(path):
