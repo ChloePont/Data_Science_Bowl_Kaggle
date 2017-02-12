@@ -79,11 +79,11 @@ def remove_noise(img):
     return imgSmooth
 
 
-def reshape_image(img):
+def reshape_image(img,w=512,h=512,f=94):
     # Define resample filter to match T1 image dimension and settings
     resample = SimpleITK.ResampleImageFilter()
     resample.SetInterpolator(SimpleITK.sitkBSpline)
-    resample.SetSize((512,512,94))
+    resample.SetSize((w,h,f))
 
     # Resize all other three images
     img_Resized = resample.Execute(img)
