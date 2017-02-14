@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import scipy
 import SimpleITK
 from sklearn.cluster import KMeans
 from skimage import morphology, measure
@@ -103,7 +104,7 @@ def segment_lungs(arr):
 # Final function to get segmented lungs out of folder path
 # Denoising hasn't been included so far
 def get_lungs_arr(patient_id, path=''):
-    img = load_image(patient_id, path)
+    img = load_images(patient_id, path)
     resampled_arr = resample(img)
     segmented_lungs = segment_lungs(resampled_arr)
     return segmented_lungs
