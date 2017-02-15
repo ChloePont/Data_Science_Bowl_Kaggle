@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import scipy
 import SimpleITK
 from sklearn.cluster import KMeans
 from skimage import morphology, measure
