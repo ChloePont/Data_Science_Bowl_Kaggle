@@ -7,7 +7,7 @@ import scipy
 import SimpleITK
 from sklearn.cluster import KMeans
 from skimage import morphology, measure
-
+import scipy
 
 # Define function to import scans for one patient
 def import_img_series(path):
@@ -108,3 +108,35 @@ def get_lungs_arr(patient_id, path=''):
     resampled_arr = resample(img)
     segmented_lungs = segment_lungs(resampled_arr)
     return segmented_lungs
+
+# Define a function to display several slices of the 4 sequences 
+
+def sitk_show_slices(img, margin=0.05, dpi=40, axis='off', size=(10,10)):
+    length = np.sqrt(img.GetSize()[2])
+    length = int(np.ceil(length))
+    fig, im = plt.subplots(length, length, figsize=size)
+        
+    for i in range(0, img.GetSize()[2]-length, length):
+        imgs = [img[:,:,j] for j in range(i, i+length)]
+        for j in range(length):
+            nda = SimpleITK.GetArrayFromImage(imgs[j])
+            spacing = imgs[j].GetSpacing()
+            figsize = (1 + margin) * nda.shape[0] / dpi, (1 + margin) * nda.shape[1] / dpi
+            extent = (0, nda.shape[1]*spacing[1], nda.shape[0]*spacing[0], 0)
+
+            plt.set_cmap("gray")
+            im[i/length,j].imshow(nda,extent=extent,interpolation=None)
+            im[i/length,j].axis(axis)
+        
+    last_imgs = [img[:,:,j] for j in range(length**2-length, img.GetSize()[2])] 
+    for j in range(length - (length**2 - img.GetSize()[2])):
+        nda = SimpleITK.GetArrayFromImage(last_imgs[j])
+        spacing = last_imgs[j].GetSpacing()
+        figsize = (1 + margin) * nda.shape[0] / dpi, (1 + margin) * nda.shape[1] / dpi
+        extent = (0, nda.shape[1]*spacing[1], nda.shape[0]*spacing[0], 0)
+
+        plt.set_cmap("gray")
+        im[length-1, j].imshow(nda,extent=extent,interpolation=None)
+        im[length-1, j].axis(axis)
+
+    fig.show()
